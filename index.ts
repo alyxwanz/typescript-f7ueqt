@@ -3,31 +3,46 @@ enum Fruit {
   BANANA = 'banana',
   ORANGE = 'orange',
   KIWI = 'kiwi',
-  APPLE = 'apple'
+  APPLE = 'apple',
 }
-const fruitBasket = {
+const fruitBasket: FruitBasket = {
   banana: 2,
   orange: 3,
   kiwi: 2,
-  apple: 3
+  apple: 3,
 };
+
+interface FruitBasket {
+  [Fruit.BANANA]: number;
+  [Fruit.ORANGE]: number;
+  [Fruit.KIWI]: number;
+  [Fruit.APPLE]: number;
+}
 
 // 2. Add typings/access modifiers to the Person class
 class Person {
-  name;
-  gender;
-  age;
-  likes;
-  public constructor(name, gender, age, likes) {
+  name: string;
+  gender: string;
+  age: number;
+  likes: string[];
+  public constructor(
+    name: string,
+    gender: string,
+    age: number,
+    likes: string[]
+  ) {
     this.name = name;
     this.gender = gender;
     this.age = age;
     this.likes = likes;
   }
 
-  public introduce() {
+  public introduce(): string {
     const { name, gender, age, likes } = this;
-    const goodLookingMap = new Map([['male', 'handsome'], ['female', 'cute']]);
+    const goodLookingMap = new Map([
+      ['male', 'handsome'],
+      ['female', 'cute'],
+    ]);
     return `
       Hello, I'm ${name}, ${age} years old, I like: ${likes.join(', ')}. 
       As you can see, I'm quite ${goodLookingMap.get(gender)} too!
@@ -39,12 +54,12 @@ const Dima = new Person('Dima', 'male', 22, ['video games', 'martial arts']);
 
 // 3. Add typings/access modifiers to MovieService class
 class MovieService {
-  logger;
-  constructor(logger) {
+  logger: LoggerOne | LoggerTwo;
+  constructor(logger: LoggerOne | LoggerTwo) {
     this.logger = logger;
   }
-  public getMovies() {
-    return Promise.resolve(['Jaws', 'Spider-Man']).catch(err => {
+  public getMovies(): Promise<string[]> {
+    return Promise.resolve(['Jaws', 'Spider-Man']).catch((err) => {
       this.logger.log(err);
       return [];
     });
